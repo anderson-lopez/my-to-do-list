@@ -3,23 +3,18 @@ import { BsTrash } from 'react-icons/bs';
 import { AiFillEdit } from 'react-icons/ai'
 import { BiSave } from "react-icons/bi";
 import axios from 'axios';
+import ModalReusable from '../Modal/ModalReusable';
 
 
 
 const Logs = ({ todo, updateTodos }) => {
-  const [isEditing, setIsEditing] = useState(false)
+  const [stateModal, setStateModal] = useState(false)
   const [currentId, setCurrentId] = useState("");
 
   const handleEditTask = (id) => {
-    todo.map((todo) => (
-      id === todo.id 
-      ? () => {
-        setCurrentId(id)
-      }
-      : alert('id no coincide')
-    ))
-
-    bottons(id)
+    setCurrentId(id)
+    setStateModal(!stateModal)
+    console.log('me activaste')
   }
 
   const handleDeleteTask = (id) => {
@@ -32,29 +27,11 @@ const Logs = ({ todo, updateTodos }) => {
     .catch((error) => console.log(error))
   }
 
-  const bottons = (id) => {
-    return (
-      <div className={`flex w-full justify-center my-3`}>
-        <div onClick={() => setIsEditing(true)} className={`flex justify-between items-center h-8 p-1 bg-gray-800 mx-3 rounded-md hover:bg-slate-200 hover:text-black duration-300 cursor-pointer`}>
-          <AiFillEdit className={`mx-1`} />
-          <h2 className={`mx-1`}>Editar</h2>
-        </div>
-        {
-          isEditing
-            ?
-            <div onClick={() => setIsEditing(false)} className={`flex justify-between items-center h-8 p-1 bg-gray-800 mx-3 rounded-md hover:bg-slate-200 hover:text-black duration-300 cursor-pointer`}>
-              <BiSave className={`mx-1`} />
-              <h2 className={`mx-1`}>Guardar</h2>
-            </div>
-            : null
-        }
-        <div onClick={() => handleDeleteTask(todo.id)} className={`flex justify-between items-center h-8 p-1 bg-gray-800 mx-3 rounded-md hover:bg-slate-200 hover:text-black duration-300 cursor-pointer`}>
-          <BsTrash className={`mx-1`} />
-          <h2 className={`mx-1`}>Eliminar</h2>
-        </div>
-      </div>
-    )
-  }
+  // const bottons = (id) => {
+  //   return (
+
+  //   )
+  // }
 
   return (
     <div className={`scrollbar scrollbar-thumb-gray-600 scrollbar-track-gray-400 rounded-2xl w-4/5 h-3/4 bg-gray-600/30 flex flex-col justify-start overflow-y-scroll items-center p-6`}>
@@ -72,10 +49,31 @@ const Logs = ({ todo, updateTodos }) => {
               <h1 className={`text-1xl my-1`}><strong>Dsescripcion:</strong></h1>
               <p className={`text-justify`}>{todo.description}</p>
             </div>
-            {bottons()}
+            <div className={`flex w-full justify-center my-3`}>
+              <div onClick={() => handleEditTask(todo.id)} className={`flex justify-between items-center h-8 p-1 bg-gray-800 mx-3 rounded-md hover:bg-slate-200 hover:text-black duration-300 cursor-pointer`}>
+                <AiFillEdit className={`mx-1`} />
+                <h2 className={`mx-1`}>Editar</h2>
+              </div>
+              <div onClick={() => handleDeleteTask(todo.id)} className={`flex justify-between items-center h-8 p-1 bg-gray-800 mx-3 rounded-md hover:bg-slate-200 hover:text-black duration-300 cursor-pointer`}>
+                <BsTrash className={`mx-1`} />
+                <h2 className={`mx-1`}>Eliminar</h2>
+              </div>
+            </div>
+
           </div>
         ))
         : <h1>no hay registros</h1>
+      }
+
+      {
+        todo.map((todo) => (
+          todo.id === currentId
+          ?
+            <ModalReusable isTitle={true} title={currentId} stateModal={stateModal} setStateModal={setStateModal} >
+              <h1>holis, me activé</h1>
+            </ModalReusable>
+          : null
+        ))
       }
     </div>
   )
