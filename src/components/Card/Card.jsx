@@ -12,7 +12,7 @@ const Card = () => {
   //Obtener siempre los registros al cargar o recargar la pagina
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_API_URL_TODO}`)
+      .get(`https://6411afc8b6067ba2f141c093.mockapi.io/api/v1/todos`)
       .then(response => setTodo(response.data))
       .catch(error => console.log(error))
   }, [])
@@ -20,7 +20,7 @@ const Card = () => {
   // Función para actualizar la lista de tareas
   const updateTodos = () => {
     axios
-      .get(`${import.meta.env.VITE_API_URL_TODO}`)
+      .get(`https://6411afc8b6067ba2f141c093.mockapi.io/api/v1/todos`)
       .then((response) => setTodo(response.data))
       .catch((error) => console.log(error));
   };

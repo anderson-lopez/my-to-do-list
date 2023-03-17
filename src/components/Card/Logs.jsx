@@ -39,7 +39,7 @@ const Logs = ({ todo, updateTodos }) => {
     setError(false)
 
     axios
-      .put(`${import.meta.env.VITE_API_URL_TODO}/${currentId}`, { title: task.title, description: task.descripcion })
+      .put(`https://6411afc8b6067ba2f141c093.mockapi.io/api/v1/todos/${currentId}`, { title: task.title, description: task.descripcion })
       .then(() => {
         updateTodos();
       })
@@ -65,7 +65,7 @@ const Logs = ({ todo, updateTodos }) => {
 
   const handleDeleteTask = (id) => {
     axios
-      .delete(`${import.meta.env.VITE_API_URL_TODO}/${id}`)
+      .delete(`https://6411afc8b6067ba2f141c093.mockapi.io/api/v1/todos/${id}`)
       .then(() => {
         updateTodos();
         alert(`Se eliminó corectamente la tarea Nº: ${id}`)

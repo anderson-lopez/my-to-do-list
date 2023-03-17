@@ -33,7 +33,7 @@ const Form = ({ updateTodos }) => {
     setError(false)
 
     axios
-      .post(`${import.meta.env.VITE_API_URL_TODO}`, {title: task.title, description: task.descripcion})
+      .post(`https://6411afc8b6067ba2f141c093.mockapi.io/api/v1/todos`, {title: task.title, description: task.descripcion})
       .then(() => {
         updateTodos(); 
       })
