@@ -4,8 +4,7 @@ import Header from '../Header/Header'
 
 const Home = () => {
   return (
-    <div className={`w-full h-full flex flex-col items-center `}>
-      <Header/>
+    <div className={`w-full h-full flex flex-col items-center relative`}>
       <Card/>
     </div>
   )

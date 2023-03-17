@@ -7,9 +7,11 @@ module.exports = {
         'custom-width': '29rem'
       },
       height: {
-        'custom-height': '38rem',
+        'custom-height': '25rem',
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar')
+  ],
 }
