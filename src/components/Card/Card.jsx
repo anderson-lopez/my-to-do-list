@@ -50,15 +50,15 @@ const Card = () => {
 
   return (
     <div className={`w-full h-full flex flex-col `}>
-      <div className={`p-[1rem] flex justify-center items-center w-full h-ull text-gray-400`}>
+      <div className={`p-[1rem] flex justify-center items-center w-full h-ull text-gray-800`}>
         <Form updateTodos={updateTodos} />
       </div>
-      <h2 className={`text-4xl text-center text-gray-400 my-9`}><strong>Lista de tareas</strong></h2>
-      <div className={` flex justify-center items-center w-full h-[5rem]`}>
+      <h2 className={`text-4xl text-center text-gray-800 my-9`}><strong>Lista de tareas</strong></h2>
+      <div className={` bg-gray-600/30 flex justify-center items-center w-full h-[5rem]`}>
         <div className={` w-[20rem]`} >
-          <input onChange={handlechange} className={` placeholder-slate-900/60 bg-slate-300 text-black h-12 rounded-lg px-2 w-full`} type="text" value={inputFilter} placeholder={"Filtrar por Titulo, Description o Nº de tarea"} />
+          <input onChange={handlechange} className={` placeholder-slate-900/60 bg-[#ffffffb6] text-black h-12 rounded-lg px-2 w-full`} type="text" value={inputFilter} placeholder={"Filtrar por Titulo, Description o Nº de tarea"} />
         </div>
-        <div className={`flex justify-between items-center h-[3rem] w-[2.5rem] mx-[0.5rem] p-1 bg-slate-200  rounded-md text-gray-400 `}>
+        <div className={`flex justify-between items-center h-[3rem] w-[2.5rem] mx-[0.5rem] p-1 bg-[#ffffffb6] text-black rounded-md `}>
           <BiSearchAlt className={`mx-1 text-2xl`} />
         </div>
       </div>

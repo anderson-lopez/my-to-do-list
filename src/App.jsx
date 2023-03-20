@@ -7,7 +7,7 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className={`w-auto bg-gradient-to-r bg-black`}>
+    <div className={`w-auto bg-gradient-to-r bg-gray-200`}>
       <Home/>
     </div>
   )
