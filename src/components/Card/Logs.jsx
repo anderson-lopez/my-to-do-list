@@ -19,7 +19,8 @@ const Logs = ({ todo, updateTodos }) => {
   const [error, setError] = useState(false);
   //Manejador de éxito
   const [success, setSuccess] = useState(false);
-  const [seeMore, setSeeMore] = useState(false)
+  //State del modal "Ver"
+  const [seeMore, setSeeMore] = useState(false) 
   //Extraccion de valores
   const { title, descripcion } = task;
 
@@ -67,11 +68,6 @@ const Logs = ({ todo, updateTodos }) => {
     setStateModal(true)
   }
 
-  const handleSeeLess = () => {
-    setCurrentId("")
-    setSeeMore(false)
-  }
-
   const handleOpenModal = (id) => {
     setCurrentId(id)
     setStateModal(true)
@@ -83,9 +79,11 @@ const Logs = ({ todo, updateTodos }) => {
       .delete(`https://6411afc8b6067ba2f141c093.mockapi.io/api/v1/todos/${id}`)
       .then(() => {
         updateTodos();
-        alert(`Se eliminó corectamente la tarea Nº: ${id}`)
+        setStateModal(true)
+        setCurrentId(id)
       })
       .catch((error) => console.log(error))
+      setCurrentId("")
   }
 
   const dateFormat = (date) => {
@@ -99,7 +97,7 @@ const Logs = ({ todo, updateTodos }) => {
         todo.map((todo, index) => (
           todo.id === currentId
             ?
-            <ModalReusable key={index} isTitle={true} title={currentId} stateModal={stateModal} setStateModal={setStateModal}>
+            <ModalReusable key={index} isTitle={true} title={seeMore === true ? `Estas visualizando la tarea Nº: ${currentId}` : `¿Quieres editar la tarea Nº: ${currentId}?`} stateModal={stateModal} setStateModal={setStateModal}>
               {
                 seeMore === true
                   ?
@@ -138,6 +136,19 @@ const Logs = ({ todo, updateTodos }) => {
             </ModalReusable>
             : null
         ))
+      }
+      {
+        stateModal
+        ?
+          todo.map((todo, index) => (
+            todo.id === currentId
+            ?
+              <ModalReusable key={index} stateModal={stateModal} setStateModal={setStateModal} isTitle={true} title={'Eliminando Tarea'}>
+              <h1>La Tarea Nº{currentId} ha sido eliminada exitosamente</h1>
+            </ModalReusable>
+            :null
+          ))
+        :null
       }
       {todo
         ?
