@@ -20,7 +20,8 @@ const Logs = ({ todo, updateTodos }) => {
   //Manejador de éxito
   const [success, setSuccess] = useState(false);
   //State del modal "Ver"
-  const [seeMore, setSeeMore] = useState(false) 
+  const [seeMore, setSeeMore] = useState(false)
+  const [seeDelete, setSeeDelete] = useState(false)
   //Extraccion de valores
   const { title, descripcion } = task;
 
@@ -32,7 +33,7 @@ const Logs = ({ todo, updateTodos }) => {
     })
   }
 
-  const editTask = (e) => {
+  const editTask = async (e) => {
     e.preventDefault();
 
     //validacion de los campos
@@ -42,7 +43,7 @@ const Logs = ({ todo, updateTodos }) => {
     }
     setError(false)
 
-    axios
+    await axios
       .put(`https://6411afc8b6067ba2f141c093.mockapi.io/api/v1/todos/${currentId}`, { title: task.title, description: task.descripcion })
       .then(() => {
         updateTodos();
@@ -74,16 +75,25 @@ const Logs = ({ todo, updateTodos }) => {
     setSeeMore(false)
   }
 
-  const handleDeleteTask = (id) => {
-    axios
-      .delete(`https://6411afc8b6067ba2f141c093.mockapi.io/api/v1/todos/${id}`)
-      .then(() => {
-        updateTodos();
-        setStateModal(true)
-        setCurrentId(id)
-      })
-      .catch((error) => console.log(error))
+  const openDeleteModal = (id) => {
+    setSeeDelete(true)
+    setCurrentId(id)
+    setTimeout(function () {
+      setSeeDelete(false)
       setCurrentId("")
+    }, 5000);
+  }
+
+  const handleDeleteTask = (id) => {
+    openDeleteModal(id);
+    setTimeout(function  () {
+      axios
+        .delete(`https://6411afc8b6067ba2f141c093.mockapi.io/api/v1/todos/${id}`)
+        .then(() => {
+          updateTodos();
+        })
+        .catch((error) => console.log(error))
+    }, 5000)
   }
 
   const dateFormat = (date) => {
@@ -138,17 +148,14 @@ const Logs = ({ todo, updateTodos }) => {
         ))
       }
       {
-        stateModal
-        ?
-          todo.map((todo, index) => (
-            todo.id === currentId
+        todo.map((todo, index) => (
+          todo.id === currentId && seeDelete === true
             ?
-              <ModalReusable key={index} stateModal={stateModal} setStateModal={setStateModal} isTitle={true} title={'Eliminando Tarea'}>
+            <ModalReusable key={index} stateModal={seeDelete} setStateModal={setSeeDelete} isTitle={true} title={'Eliminando Tarea'}>
               <h1>La Tarea Nº{currentId} ha sido eliminada exitosamente</h1>
             </ModalReusable>
-            :null
-          ))
-        :null
+            : null
+        ))
       }
       {todo
         ?
